@@ -9,7 +9,7 @@ import (
 )
 
 type CreateSessionRequest struct {
-	ClientSession
+	ServerSession
 
 	// The Realtime model used for this session.
 	Model string `json:"model"`

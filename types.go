@@ -122,8 +122,12 @@ const (
 )
 
 type InputAudioTranscription struct {
-	// The model used for transcription.
+	// The model to use for transcription, whisper-1 is the only currently supported model.
 	Model string `json:"model"`
+	// The language of the input audio. Supplying the input language in ISO-639-1 (e.g. en) format will improve accuracy and latency.
+	Language string `json:"language"`
+	//An optional text to guide the model's style or continue a previous audio segment. The prompt should match the audio language.
+	Prompt string `json:"prompt,omitempty"`
 }
 
 type Tool struct {
@@ -249,13 +253,13 @@ type ServerSession struct {
 	Modalities []Modality `json:"modalities,omitempty"`
 	// The default system instructions.
 	Instructions string `json:"instructions,omitempty"`
-	// The voice the model uses to respond - one of alloy, echo, or shimmer.
+	// t
 	Voice Voice `json:"voice,omitempty"`
-	// The format of input audio.
+	// The format of input audio. Options are pcm16, g711_ulaw, or g711_alaw. For pcm16, input audio must be 16-bit PCM at a 24kHz sample rate, single channel (mono), and little-endian byte order.
 	InputAudioFormat AudioFormat `json:"input_audio_format,omitempty"`
-	// The format of output audio.
+	// The format of output audio. Options are pcm16, g711_ulaw, or g711_alaw. For pcm16, output audio is sampled at a rate of 24kHz.
 	OutputAudioFormat AudioFormat `json:"output_audio_format,omitempty"`
-	// Configuration for input audio transcription.
+	// Configuration for input audio transcription, defaults to off and can be set to null to turn off once on.
 	InputAudioTranscription *InputAudioTranscription `json:"input_audio_transcription,omitempty"`
 	// Configuration for turn detection.
 	TurnDetection *ServerTurnDetection `json:"turn_detection,omitempty"`

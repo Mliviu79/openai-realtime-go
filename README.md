@@ -239,7 +239,7 @@ createReq := &session.CreateRequest{
 
 ## Comprehensive Example
 
-For a complete demonstration of all message types and features, see the [comprehensive example](examples/comprehensive_run.go).
+For a complete demonstration of all message types and features, see the [comprehensive example](examples/comprehensive_example.go).
 
 This example shows:
 

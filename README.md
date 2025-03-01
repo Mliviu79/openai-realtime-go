@@ -1,14 +1,40 @@
-# OpenAI Realtime API SDK for Golang
+# Go OpenAI Realtime API Client
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/Mliviu79/go-openai-realtime.svg)](https://pkg.go.dev/github.com/Mliviu79/go-openai-realtime)
 [![Go Report Card](https://goreportcard.com/badge/github.com/Mliviu79/go-openai-realtime)](https://goreportcard.com/report/github.com/Mliviu79/go-openai-realtime)
-[![codecov](https://codecov.io/gh/Mliviu79/go-openai-realtime/branch/main/graph/badge.svg?token=bCbIfHLIsW)](https://codecov.io/gh/Mliviu79/go-openai-realtime)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Mliviu79/go-openai-realtime/blob/main/LICENSE)
 
-This library provides unofficial Go clients for [OpenAI Realtime API](https://platform.openai.com/docs/api-reference/realtime). We support all 9 client events and 28 server events.
+A fully-featured Go client for the OpenAI Realtime API, supporting multi-modal conversations with text and audio. This project is a heavily refactored and restructured fork of [WqyJh/go-openai-realtime](https://github.com/WqyJh/go-openai-realtime).
 
-[Model Support](https://platform.openai.com/docs/models/gpt-4o-realtime):
-- gpt-4o-realtime-preview
-- gpt-4o-realtime-preview-2024-10-01
+## Overview
+
+This client allows you to integrate with OpenAI's Realtime API to build applications that can have natural, streaming conversations with OpenAI models like GPT-4o. The Realtime API enables:
+
+- **Multi-modal conversations** - Support for both text and audio modalities
+- **Bidirectional streaming** - Real-time streaming of both user inputs and model outputs
+- **Voice interactions** - Voice input/output with different voice options and formats
+- **Function calling** - Define and call tools/functions from the model
+- **Turn detection** - Voice Activity Detection (VAD) for natural conversation turns
+
+This client library provides a complete implementation of all 28 incoming and 9 outgoing message types supported by the Realtime API.
+
+## Key Differences from Original
+
+This fork has been extensively refactored to provide:
+
+- More modular package structure with clear separation of concerns
+- Comprehensive godoc documentation for every package and type
+- Type-safe API with well-defined interfaces
+- Improved error handling and logging
+- Expanded examples for various use cases
+
+## Supported Models
+
+- `gpt-4o-realtime-preview`
+- `gpt-4o-realtime-preview-2024-10-01`
+- `gpt-4o-realtime-preview-2024-12-17`
+- `gpt-4o-mini-realtime-preview`
+- `gpt-4o-mini-realtime-preview-2024-12-17`
 
 ## Installation
 
@@ -16,167 +42,236 @@ This library provides unofficial Go clients for [OpenAI Realtime API](https://pl
 go get github.com/Mliviu79/go-openai-realtime
 ```
 
-Currently, go-openai-realtime requires Go version 1.19 or greater.
+This library requires Go version 1.23 or greater.
 
-## Usage
+## Quick Start
 
-Connect to the OpenAI Realtime API. The default websocket library is [coder/websocket](https://github.com/coder/websocket).
+Here's a simple example to get started:
 
 ```go
 package main
 
 import (
-	"bufio"
 	"context"
 	"fmt"
 	"log"
 	"os"
+	"time"
 
-	openairt "github.com/Mliviu79/go-openai-realtime"
+	"github.com/Mliviu79/go-openai-realtime/messages/incoming"
+	"github.com/Mliviu79/go-openai-realtime/messaging"
+	"github.com/Mliviu79/go-openai-realtime/openaiClient"
+	"github.com/Mliviu79/go-openai-realtime/session"
 )
 
 func main() {
-	client := openairt.NewClient("your-api-key")
-	conn, err := client.Connect(context.Background())
-	if err != nil {
-		log.Fatal(err)
+	// Get API key from environment
+	apiKey := os.Getenv("OPENAI_API_KEY")
+	if apiKey == "" {
+		log.Fatal("OPENAI_API_KEY environment variable is required")
 	}
-	defer conn.Close()
-}
-```
 
-<details>
-<summary>Use another WebSocket dialer</summary>
+	// Create a context with timeout
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+	defer cancel()
 
-Switch to another websocket dialer [gorilla/websocket](https://github.com/gorilla/websocket).
+	// Create a client
+	client := openaiClient.NewClient(apiKey)
 
-```go
-import (
-	openairt "github.com/Mliviu79/go-openai-realtime"
-	gorilla "github.com/Mliviu79/go-openai-realtime/contrib/ws-gorilla"
-)
-
-func main() {
-	dialer := gorilla.NewWebSocketDialer(gorilla.WebSocketOptions{})
-	conn, err := client.Connect(ctx, openairt.WithDialer(dialer))
+	// Connect to the API with the specified model
+	conn, err := client.Connect(ctx, 
+		openaiClient.WithModel(session.GPT4oRealtimePreview))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to connect: %v", err)
 	}
-	defer conn.Close()
-```
 
-</details>
+	// Create messaging client to handle the protocol
+	msgClient := messaging.NewClient(conn)
 
+	// Send a text message
+	err = msgClient.SendTextMessage(ctx, "Tell me about the OpenAI Realtime API", nil)
+	if err != nil {
+		log.Fatalf("Failed to send message: %v", err)
+	}
 
-<details>
-<summary>Send message</summary>
-
-```go
-
-import (
-	openairt "github.com/Mliviu79/go-openai-realtime"
-)
-
-func main() {
-    err = conn.SendMessage(ctx, &openairt.SessionUpdateEvent{
-        Session: openairt.ClientSession{
-            Modalities: []openairt.Modality{openairt.ModalityText},
-        },
-    })
-}
-```
-
-</details>
-
-
-<details>
-<summary>Read message</summary>
-
-`ReadMessage` is a blocking method that reads the next message from the connection.
-It should be called in a standalone goroutine because it's blocking.
-If the returned error is Permanent, the future read operations on the same connection will not succeed,
-that means the connection is broken and should be closed or had already been closed.
-
-```go
+	// Read and process messages
+	fmt.Println("Response:")
 	for {
-		msg, err := c.conn.ReadMessage(ctx)
+		msg, err := msgClient.ReadMessage(ctx)
 		if err != nil {
-			var permanent *PermanentError
-			if errors.As(err, &permanent) {
-				return permanent.Err
-			}
-			c.conn.logger.Warnf("read message temporary error: %+v", err)
-			continue
+			log.Fatalf("Error reading message: %v", err)
 		}
-		// handle message
-	}
-```
 
-</details>
-
-
-<details>
-<summary>Subscribe to events</summary>
-
-`ConnHandler` is a helper that reads messages from the server in a standalone goroutine and calls the registered handlers.
-
-Call `openairt.NewConnHandler` to create a `ConnHandler`, then call `Start` to start a new goroutine to read messages.
-You can specify only one handler to handle all events or specify multiple handlers.
-It's recommended to specify multiple handlers for different purposes.
-The registered handlers will be called in the order of registration.
-
-```go
-	connHandler := openairt.NewConnHandler(ctx, conn, handler1, handler2, ...)
-	connHandler.Start()
-```
-
-A handler is function that handle `ServerEvent`. Use `event.ServerEventType()` to determine the type of the event.
-Based on the event type, you can get the event data by type assertion.
-
-
-```go
-	// Teletype response
-	responseDeltaHandler := func(ctx context.Context, event openairt.ServerEvent) {
-		switch event.ServerEventType() {
-		case openairt.ServerEventTypeResponseTextDelta:
-			fmt.Printf(event.(openairt.ResponseTextDeltaEvent).Delta)
+		// Handle different message types
+		switch m := msg.(type) {
+		case *incoming.ResponseTextDeltaMessage:
+			// Print text deltas as they arrive
+			fmt.Print(m.Delta.Text)
+		case *incoming.ResponseDoneMessage:
+			// End of the response
+			fmt.Println("\nResponse complete")
+			return
 		}
 	}
+}
 ```
 
+## Session Management
 
-There's no need to `Stop` the `ConnHandler`, it will exit when the connection is closed.
-If you want to wait for the `ConnHandler` to exit, you can use `Err()`. This will return
-a channel to receive the error.
-
-Note that the receive of the error channel is blocking, so make sure not to call `conn.Close`
-after it, which cause deadlock.
+You can create and manage sessions either through the REST API or WebSocket messages:
 
 ```go
-    conn.Close()
-	err = <-connHandler.Err()
-	if err != nil {
-		log.Printf("connection error: %v", err)
-	}
+// Create a session via REST API
+model := session.GPT4oRealtimePreview
+modalities := []session.Modality{session.ModalityText, session.ModalityAudio}
+
+createReq := &session.CreateRequest{
+    SessionRequest: session.SessionRequest{
+        Model:      &model,
+        Modalities: &modalities,
+    },
+}
+
+sessionResp, err := client.CreateSession(ctx, createReq)
+if err != nil {
+    log.Fatalf("Failed to create session: %v", err)
+}
+
+// Connect using the session ID
+conn, err := client.Connect(ctx,
+    openaiClient.WithModel(model),
+    openaiClient.WithSessionID(sessionResp.ID))
 ```
 
+## Advanced Features
 
-</details>
+### Audio Input/Output
 
+The client supports sending and receiving audio in various formats:
 
+```go
+// Configure audio formats in the session
+inputFormat := session.AudioFormatPCM16
+outputFormat := session.AudioFormatPCM16
+voice := session.VoiceAlloy
 
-## More examples
+createReq := &session.CreateRequest{
+    SessionRequest: session.SessionRequest{
+        Model:             &model,
+        Modalities:        &[]session.Modality{session.ModalityText, session.ModalityAudio},
+        InputAudioFormat:  &inputFormat,
+        OutputAudioFormat: &outputFormat,
+        Voice:             &voice,
+    },
+}
 
-- [Text-To-Text Example](./examples/text-only/README.md)
-- [Text-To-Voice Example](./examples/voice/text-voice/README.md)
-- [Voice-To-Voice Example](./examples/voice/voice-voice/README.md)
+// Send audio data
+audioData := []byte{...} // Your PCM16 audio data
+err = msgClient.SendAudioMessage(ctx, audioData, nil)
+```
 
-## WebSocket Adapter
+### Function Calling
 
-The default WebSocket adapter is [coder/websocket](https://github.com/coder/websocket).
-There's also a [gorilla/websocket](https://github.com/gorilla/websocket) adapter.
-You can easily implement your own adapter by implementing the `WebSocketConn` interface and `WebSocketDialer` interface.
+You can define functions for the model to call:
 
-Supported adapters:
-- [coder/websocket](./ws_coder.go)
-- [gorilla/websocket](./contrib/ws-gorilla)
+```go
+// Define a tool/function
+getWeatherParams := map[string]interface{}{
+    "type": "object",
+    "properties": map[string]interface{}{
+        "location": map[string]interface{}{
+            "type": "string",
+            "description": "The city and state, e.g. San Francisco, CA",
+        },
+    },
+    "required": []string{"location"},
+}
+
+tools := []session.Tool{
+    {
+        Type: "function",
+        Function: &session.Function{
+            Name:        "get_weather",
+            Description: "Get the current weather in a given location",
+            Parameters:  getWeatherParams,
+        },
+    },
+}
+
+// Add tools to the session
+createReq := &session.CreateRequest{
+    SessionRequest: session.SessionRequest{
+        Model: &model,
+        Tools: &tools,
+    },
+}
+```
+
+### Turn Detection
+
+Enable Voice Activity Detection (VAD) for natural conversation turns:
+
+```go
+// Configure turn detection
+turnDetectionType := "server_vad"
+threshold := 0.5
+prefixPaddingMs := 300
+silenceDurationMs := 500
+createResponse := true
+interruptResponse := true
+
+turnDetection := &session.TurnDetection{
+    Type:              &turnDetectionType,
+    Threshold:         &threshold,
+    PrefixPaddingMs:   &prefixPaddingMs,
+    SilenceDurationMs: &silenceDurationMs,
+    CreateResponse:    &createResponse,
+    InterruptResponse: &interruptResponse,
+}
+
+createReq := &session.CreateRequest{
+    SessionRequest: session.SessionRequest{
+        Model:         &model,
+        TurnDetection: turnDetection,
+    },
+}
+```
+
+## Comprehensive Example
+
+For a complete demonstration of all message types and features, see the [comprehensive example](examples/comprehensive_run.go).
+
+This example shows:
+
+- All 28 incoming message types
+- All 9 outgoing message types
+- Audio handling
+- Function calling
+- Turn detection
+- Error handling
+
+## Package Structure
+
+Our library is organized into several packages with clear separation of concerns:
+
+- `openaiClient` - Main client package for API connection
+- `session` - Session management and configuration
+- `messages` - Message types and handling
+  - `incoming` - Incoming message types
+  - `outgoing` - Outgoing message types
+  - `types` - Shared message type definitions
+  - `factory` - Message factory functions
+- `messaging` - High-level messaging interface
+- `ws` - WebSocket connection management
+- `httpClient` - HTTP client for REST API endpoints
+- `logger` - Logging utilities
+- `apierrs` - Error handling
+
+## Documentation
+
+- [GoDoc](https://pkg.go.dev/github.com/Mliviu79/go-openai-realtime)
+- [OpenAI Realtime API Documentation](https://platform.openai.com/docs/api-reference/realtime)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 

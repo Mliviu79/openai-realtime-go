@@ -1,6 +1,10 @@
 MIT License
 
-Copyright (c) 2024 Qiying Wang
+Copyright (c) 2024 Mliviu79
+Portions Copyright (c) 2024 Qiying Wang
+
+This project contains significant modifications and extensions from the 
+original work by Qiying Wang (https://github.com/WqyJh/go-openai-realtime).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -85,6 +85,11 @@ func (m RcvdMsgBase) RcvdMsgType() RcvdMsgType {
 	return m.Type
 }
 
+// String returns the string representation of the message type
+func (t RcvdMsgType) String() string {
+	return string(t)
+}
+
 // ErrorInfo contains detailed information about an error
 type ErrorInfo struct {
 	// Type indicates the category of error (e.g., "invalid_request_error")

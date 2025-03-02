@@ -55,6 +55,11 @@ func (m OutMsgBase) OutMsgType() string {
 	return string(m.Type)
 }
 
+// String returns the string representation of the message type
+func (t OutMsgType) String() string {
+	return string(t)
+}
+
 // OutMsgID returns the client-generated ID for this message
 func (m OutMsgBase) OutMsgID() string {
 	return m.ID

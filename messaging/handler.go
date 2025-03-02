@@ -3,9 +3,9 @@ package messaging
 import (
 	"context"
 
-	"github.com/Mliviu79/go-openai-realtime/logger"
-	"github.com/Mliviu79/go-openai-realtime/messages/incoming"
-	"github.com/Mliviu79/go-openai-realtime/ws"
+	"github.com/Mliviu79/openai-realtime-go/logger"
+	"github.com/Mliviu79/openai-realtime-go/messages/incoming"
+	"github.com/Mliviu79/openai-realtime-go/ws"
 )
 
 // MessageHandler is a function that processes an incoming OpenAI message

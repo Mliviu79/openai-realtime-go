@@ -6,8 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/Mliviu79/go-openai-realtime/httpClient"
-	"github.com/Mliviu79/go-openai-realtime/session"
+	"github.com/Mliviu79/openai-realtime-go/httpClient"
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 func TestNewClient(t *testing.T) {

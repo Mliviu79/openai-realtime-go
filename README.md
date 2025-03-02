@@ -1,8 +1,8 @@
 # Go OpenAI Realtime API Client
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/Mliviu79/go-openai-realtime.svg)](https://pkg.go.dev/github.com/Mliviu79/go-openai-realtime)
-[![Go Report Card](https://goreportcard.com/badge/github.com/Mliviu79/go-openai-realtime)](https://goreportcard.com/report/github.com/Mliviu79/go-openai-realtime)
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Mliviu79/go-openai-realtime/blob/main/LICENSE)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Mliviu79/openai-realtime-go.svg)](https://pkg.go.dev/github.com/Mliviu79/openai-realtime-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Mliviu79/openai-realtime-go)](https://goreportcard.com/report/github.com/Mliviu79/openai-realtime-go)
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Mliviu79/openai-realtime-go/blob/main/LICENSE)
 
 A fully-featured Go client for the OpenAI Realtime API, supporting multi-modal conversations with text and audio. This project is a heavily refactored and restructured fork of [WqyJh/go-openai-realtime](https://github.com/WqyJh/go-openai-realtime).
 
@@ -39,7 +39,7 @@ This fork has been extensively refactored to provide:
 ## Installation
 
 ```bash
-go get github.com/Mliviu79/go-openai-realtime
+go get github.com/Mliviu79/openai-realtime-go
 ```
 
 This library requires Go version 1.23 or greater.
@@ -58,10 +58,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/Mliviu79/go-openai-realtime/messages/incoming"
-	"github.com/Mliviu79/go-openai-realtime/messaging"
-	"github.com/Mliviu79/go-openai-realtime/openaiClient"
-	"github.com/Mliviu79/go-openai-realtime/session"
+	"github.com/Mliviu79/openai-realtime-go/messages/incoming"
+	"github.com/Mliviu79/openai-realtime-go/messaging"
+	"github.com/Mliviu79/openai-realtime-go/openaiClient"
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 func main() {
@@ -269,7 +269,7 @@ Our library is organized into several packages with clear separation of concerns
 
 ## Documentation
 
-- [GoDoc](https://pkg.go.dev/github.com/Mliviu79/go-openai-realtime)
+- [GoDoc](https://pkg.go.dev/github.com/Mliviu79/openai-realtime-go)
 - [OpenAI Realtime API Documentation](https://platform.openai.com/docs/api-reference/realtime)
 
 ## License

@@ -35,7 +35,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/Mliviu79/go-openai-realtime/logger"
+	"github.com/Mliviu79/openai-realtime-go/logger"
 )
 
 // Conn is a generic WebSocket connection wrapper.

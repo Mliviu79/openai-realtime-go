@@ -6,7 +6,7 @@ import (
 	"net"
 	"strings"
 
-	"github.com/Mliviu79/go-openai-realtime/apierrs"
+	"github.com/Mliviu79/openai-realtime-go/apierrs"
 )
 
 // RawMessageHandler is a function that processes raw WebSocket messages

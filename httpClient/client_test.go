@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Mliviu79/go-openai-realtime/apierrs"
+	"github.com/Mliviu79/openai-realtime-go/apierrs"
 )
 
 type testRequest struct {

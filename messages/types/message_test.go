@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/Mliviu79/go-openai-realtime/session"
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 func TestMessageRoles(t *testing.T) {

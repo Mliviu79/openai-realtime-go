@@ -1,4 +1,4 @@
-module github.com/Mliviu79/go-openai-realtime
+module github.com/Mliviu79/openai-realtime-go
 
 go 1.23.0
 

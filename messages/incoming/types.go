@@ -3,7 +3,7 @@
 // The package handles deserialization and structured access to these messages to simplify API interaction.
 package incoming
 
-import "github.com/Mliviu79/go-openai-realtime/apierrs"
+import "github.com/Mliviu79/openai-realtime-go/apierrs"
 
 // RcvdMsgType represents the type of message received from the server
 type RcvdMsgType string

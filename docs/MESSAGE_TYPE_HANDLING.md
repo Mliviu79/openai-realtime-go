@@ -1,6 +1,6 @@
-# Message Type Handling in go-openai-realtime
+# Message Type Handling in openai-realtime-go
 
-This document outlines best practices for handling message types in the go-openai-realtime package.
+This document outlines best practices for handling message types in the openai-realtime-go package.
 
 ## Problem
 

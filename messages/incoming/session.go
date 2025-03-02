@@ -1,7 +1,7 @@
 package incoming
 
 import (
-	"github.com/Mliviu79/go-openai-realtime/session"
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 // SessionCreatedMessage is sent when a new session is created

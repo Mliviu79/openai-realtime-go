@@ -113,10 +113,10 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/Mliviu79/go-openai-realtime/httpClient"
-	logger "github.com/Mliviu79/go-openai-realtime/logger"
-	"github.com/Mliviu79/go-openai-realtime/session"
-	"github.com/Mliviu79/go-openai-realtime/ws"
+	"github.com/Mliviu79/openai-realtime-go/httpClient"
+	logger "github.com/Mliviu79/openai-realtime-go/logger"
+	"github.com/Mliviu79/openai-realtime-go/session"
+	"github.com/Mliviu79/openai-realtime-go/ws"
 )
 
 // ConnectOption is a function that configures connection options

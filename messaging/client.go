@@ -51,13 +51,13 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/Mliviu79/go-openai-realtime/logger"
-	"github.com/Mliviu79/go-openai-realtime/messages/factory"
-	"github.com/Mliviu79/go-openai-realtime/messages/incoming"
-	"github.com/Mliviu79/go-openai-realtime/messages/outgoing"
-	"github.com/Mliviu79/go-openai-realtime/messages/types"
-	"github.com/Mliviu79/go-openai-realtime/session"
-	"github.com/Mliviu79/go-openai-realtime/ws"
+	"github.com/Mliviu79/openai-realtime-go/logger"
+	"github.com/Mliviu79/openai-realtime-go/messages/factory"
+	"github.com/Mliviu79/openai-realtime-go/messages/incoming"
+	"github.com/Mliviu79/openai-realtime-go/messages/outgoing"
+	"github.com/Mliviu79/openai-realtime-go/messages/types"
+	"github.com/Mliviu79/openai-realtime-go/session"
+	"github.com/Mliviu79/openai-realtime-go/ws"
 )
 
 // Client is a client for the OpenAI Realtime API that handles message serialization/deserialization.

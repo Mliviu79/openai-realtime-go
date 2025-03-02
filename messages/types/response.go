@@ -1,8 +1,8 @@
 package types
 
 import (
-	"github.com/Mliviu79/go-openai-realtime/apierrs"
-	"github.com/Mliviu79/go-openai-realtime/session"
+	"github.com/Mliviu79/openai-realtime-go/apierrs"
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 //-----------------------------------------------------------------------------

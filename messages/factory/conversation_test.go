@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/Mliviu79/go-openai-realtime/messages/types"
+	"github.com/Mliviu79/openai-realtime-go/messages/types"
 )
 
 func TestMessageItem(t *testing.T) {

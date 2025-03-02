@@ -1,7 +1,7 @@
 package outgoing
 
 import (
-	"github.com/Mliviu79/go-openai-realtime/session"
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 // SessionUpdateMessage is used to update session configuration

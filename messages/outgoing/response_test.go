@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/Mliviu79/go-openai-realtime/messages/types"
-	"github.com/Mliviu79/go-openai-realtime/session"
+	"github.com/Mliviu79/openai-realtime-go/messages/types"
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 func TestResponseCreateMessageStructure(t *testing.T) {

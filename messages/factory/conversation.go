@@ -1,7 +1,7 @@
 package factory
 
 import (
-	"github.com/Mliviu79/go-openai-realtime/messages/types"
+	"github.com/Mliviu79/openai-realtime-go/messages/types"
 )
 
 // MessageItem creates a new message item

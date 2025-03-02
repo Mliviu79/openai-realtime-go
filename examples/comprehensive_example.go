@@ -27,14 +27,14 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Mliviu79/go-openai-realtime/logger"
-	"github.com/Mliviu79/go-openai-realtime/messages/incoming"
-	"github.com/Mliviu79/go-openai-realtime/messages/outgoing"
-	"github.com/Mliviu79/go-openai-realtime/messages/types"
-	"github.com/Mliviu79/go-openai-realtime/messaging"
-	"github.com/Mliviu79/go-openai-realtime/openaiClient"
-	"github.com/Mliviu79/go-openai-realtime/session"
-	"github.com/Mliviu79/go-openai-realtime/ws"
+	"github.com/Mliviu79/openai-realtime-go/logger"
+	"github.com/Mliviu79/openai-realtime-go/messages/incoming"
+	"github.com/Mliviu79/openai-realtime-go/messages/outgoing"
+	"github.com/Mliviu79/openai-realtime-go/messages/types"
+	"github.com/Mliviu79/openai-realtime-go/messaging"
+	"github.com/Mliviu79/openai-realtime-go/openaiClient"
+	"github.com/Mliviu79/openai-realtime-go/session"
+	"github.com/Mliviu79/openai-realtime-go/ws"
 	"github.com/rs/zerolog"
 )
 

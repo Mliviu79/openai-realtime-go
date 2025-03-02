@@ -1,7 +1,7 @@
 package outgoing
 
 import (
-	"github.com/Mliviu79/go-openai-realtime/messages/types"
+	"github.com/Mliviu79/openai-realtime-go/messages/types"
 )
 
 // AudioBufferAppendMessage is used to append audio data to the buffer

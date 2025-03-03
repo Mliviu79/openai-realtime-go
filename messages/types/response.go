@@ -202,7 +202,7 @@ type ResponseConfig struct {
 
 	// MaxResponseOutputTokens limits the length of the response
 	// Range: 1-4096 or "inf", default "inf"
-	MaxResponseOutputTokens *session.IntOrInf `json:"max_response_output_tokens,omitempty"`
+	MaxResponseOutputTokens *session.IntOrInf `json:"max_output_tokens,omitempty"`
 
 	// Conversation controls whether to use conversation history
 	// Options: "auto" or "none", default "auto"

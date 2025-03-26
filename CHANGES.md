@@ -2,6 +2,14 @@
 
 This document outlines the major changes and improvements made in this fork of the [WqyJh/go-openai-realtime](https://github.com/WqyJh/go-openai-realtime) library.
 
+## Latest Updates (March 2024)
+
+- **Updated Dependencies**: Modified `go.mod` and `go.sum` to update dependencies.
+- **Gitignore Improvements**: Added additional patterns to `.gitignore`.
+- **Message Handling Fixes**: Fixed issues in `messages/types/response.go` and `messages/incoming/session_test.go`.
+- **Session Management Enhancements**: Improved session type definitions in `session/session_types.go`.
+- **Tool Functionality Updates**: Enhanced tool functionality in `session/tools.go`.
+
 ## Architecture Changes
 
 ### Package Structure

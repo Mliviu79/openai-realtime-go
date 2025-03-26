@@ -73,13 +73,14 @@ type ToolChoiceObj struct {
 // MarshalJSON implements custom JSON marshaling for ToolChoiceObj
 func (tc ToolChoiceObj) MarshalJSON() ([]byte, error) {
 	if tc.Type == "auto" || tc.Type == "none" || tc.Type == "required" {
-		return json.Marshal(tc.Type)
+		return json.Marshal(string(tc.Type))
 	}
 
 	if tc.Type == "function" && tc.Function != nil {
-		return json.Marshal(map[string]interface{}{
-			"type":     tc.Type,
-			"function": tc.Function,
+		// Map directly to the expected format: {"type":"function", "name":"function_name"}
+		return json.Marshal(map[string]any{
+			"type": "function",
+			"name": tc.Function.Name,
 		})
 	}
 

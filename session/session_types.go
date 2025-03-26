@@ -19,29 +19,17 @@ type ClientSecret struct {
 // Deprecated: This type is no longer used as the API directly returns the ClientSecret structure
 // without this additional nesting level.
 type ClientSecretInfo struct {
-	ClientSecret ClientSecret `json:"client_secret"`
+	ClientSecret ClientSecret `json:"client_secret,omitempty"`
 }
 
 // Session represents a complete session with the OpenAI Realtime API
 type Session struct {
 	// Server-assigned fields
-	ID           string        `json:"id,omitempty"`
-	Object       string        `json:"object,omitempty"` // Always "realtime.session" when present
-	ClientSecret *ClientSecret `json:"client_secret,omitempty"`
+	ID     string `json:"id,omitempty"`
+	Object string `json:"object,omitempty"` // Always "realtime.session" when present
+	ClientSecretInfo
 
-	// Common configuration fields
-	Modalities              *[]Modality              `json:"modalities,omitempty"`
-	Model                   *Model                   `json:"model,omitempty"`
-	Instructions            *string                  `json:"instructions,omitempty"`
-	Voice                   *Voice                   `json:"voice,omitempty"`
-	InputAudioFormat        *AudioFormat             `json:"input_audio_format,omitempty"`
-	OutputAudioFormat       *AudioFormat             `json:"output_audio_format,omitempty"`
-	InputAudioTranscription *InputAudioTranscription `json:"input_audio_transcription,omitempty"`
-	TurnDetection           *TurnDetection           `json:"turn_detection,omitempty"`
-	Tools                   *[]Tool                  `json:"tools,omitempty"`
-	ToolChoice              *ToolChoiceObj           `json:"tool_choice,omitempty"`
-	Temperature             *float64                 `json:"temperature,omitempty"`
-	MaxResponseOutputTokens *IntOrInf                `json:"max_response_output_tokens,omitempty"`
+	SessionRequest
 }
 
 // NewSession creates a new Session with default values

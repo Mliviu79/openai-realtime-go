@@ -176,7 +176,7 @@ func NewResponse() *Response {
 type ResponseConfig struct {
 	// Modalities specifies the types of output the model can generate
 	// Example: [session.ModalityText, session.ModalityAudio]
-	Modalities []session.Modality `json:"modalities"`
+	Modalities []session.Modality `json:"modalities,omitempty"`
 
 	// Instructions provides system instructions to guide the model
 	Instructions *string `json:"instructions,omitempty"`

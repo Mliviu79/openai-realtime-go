@@ -50,12 +50,8 @@ func TestSessionCreatedMessage(t *testing.T) {
 		t.Errorf("Expected Session.Object to be %q, got %q", "session", sessionMsg.Session.Object)
 	}
 
-	if sessionMsg.Session.ClientSecret == nil {
-		t.Errorf("Expected Session.ClientSecret to not be nil")
-	} else {
-		if sessionMsg.Session.ClientSecret.Value != "secret-value" {
-			t.Errorf("Expected Session.ClientSecret.Value to be %q, got %q", "secret-value", sessionMsg.Session.ClientSecret.Value)
-		}
+	if sessionMsg.Session.ClientSecretInfo.ClientSecret.Value != "secret-value" {
+		t.Errorf("Expected Session.ClientSecret.Value to be %q, got %q", "secret-value", sessionMsg.Session.ClientSecretInfo.ClientSecret.Value)
 	}
 
 	// Test marshaling back to JSON

@@ -40,6 +40,9 @@ var MessageTypeRegistry = map[RcvdMsgType]func() RcvdMsg{
 	RcvdMsgTypeConversationItemInputAudioTranscriptionCompleted: func() RcvdMsg {
 		return &ConversationItemTranscriptionCompletedMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeConversationItemInputAudioTranscriptionCompleted}}
 	},
+	RcvdMsgTypeConversationItemInputAudioTranscriptionDelta: func() RcvdMsg {
+		return &ConversationItemTranscriptionDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeConversationItemInputAudioTranscriptionDelta}}
+	},
 	RcvdMsgTypeConversationItemInputAudioTranscriptionFailed: func() RcvdMsg {
 		return &ConversationItemTranscriptionFailedMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeConversationItemInputAudioTranscriptionFailed}}
 	},

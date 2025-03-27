@@ -59,3 +59,14 @@ type ConversationItemDeletedMessage struct {
 	// ItemID identifies the conversation item that was deleted
 	ItemID string `json:"item_id"`
 }
+
+// ConversationItemTranscriptionDeltaMessage is sent as an incremental update during real-time transcription
+type ConversationItemTranscriptionDeltaMessage struct {
+	RcvdMsgBase
+	// ItemID identifies the conversation item this transcription belongs to
+	ItemID string `json:"item_id"`
+	// ContentIndex specifies which content part within the item is being transcribed
+	ContentIndex int `json:"content_index"`
+	// Delta contains the incremental text transcribed from audio
+	Delta string `json:"delta"`
+}

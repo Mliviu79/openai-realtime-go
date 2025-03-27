@@ -38,10 +38,6 @@ var simulatedPhrases = []string{
 	"What are the main differences between supervised and unsupervised learning?",
 }
 
-// Transcription simulation results, to track what we've "received" to make the simulation more realistic
-var receivedTranscriptions = make(map[int]string)
-var transcriptionMutex sync.Mutex
-
 func main() {
 	// Get API key from environment
 	apiKey := os.Getenv("OPENAI_API_KEY")

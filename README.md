@@ -6,6 +6,19 @@
 
 A fully-featured Go client for the OpenAI Realtime API, supporting multi-modal conversations with text and audio. This project is a heavily refactored and restructured fork of [WqyJh/go-openai-realtime](https://github.com/WqyJh/go-openai-realtime).
 
+## Latest Release: v0.1.3
+
+This release includes several important improvements:
+
+- **Fixed API Compatibility**: Updated the `SendText` method to use `input_text` instead of `text` content type to properly match OpenAI's API expectations
+- **New Examples**: Added comprehensive examples demonstrating practical use cases, including:
+  - **Dual Session Example**: Shows how to run both transcription and conversation sessions simultaneously
+  - **Simulated Transcription Example**: Demonstrates how to process text as if it were transcribed audio
+- **Better Documentation**: Added detailed READMEs for all examples
+- **Bug Fixes**: Fixed various issues and linter errors
+
+For a complete list of changes, see the [CHANGES.md](CHANGES.md) file.
+
 ## Overview
 
 This client allows you to integrate with OpenAI's Realtime API to build applications that can have natural, streaming conversations with OpenAI models like GPT-4o. The Realtime API enables:
@@ -125,6 +138,46 @@ func main() {
 		}
 	}
 }
+```
+
+## Examples
+
+The library includes several example applications to demonstrate different use cases:
+
+### Text Messaging Example
+
+A simple example showing how to send text messages and handle responses.
+
+```bash
+cd examples/text_message
+go run text_message_example.go
+```
+
+### Transcription Example
+
+Demonstrates how to use the transcription API to convert audio to text.
+
+```bash
+cd examples/transcription_example
+go run main.go
+```
+
+### Simulated Transcription Example
+
+Shows how to send simulated audio transcriptions to a conversation session and get responses.
+
+```bash
+cd examples/simulated_transcription
+go run simulated_transcription_example.go
+```
+
+### Dual Session Example
+
+Advanced example showing how to run both transcription and conversation sessions simultaneously, mimicking a complete voice assistant pipeline.
+
+```bash
+cd examples/dual_session
+go run dual_session_example.go
 ```
 
 ## Important: Two-Step Process for Getting Responses
@@ -343,8 +396,8 @@ For a complete demonstration of all message types and features, see the [compreh
 
 This example shows:
 
-- All 28 incoming message types
-- All 9 outgoing message types
+- All 29 incoming message types
+- All 10 outgoing message types
 - Audio handling
 - Function calling
 - Turn detection

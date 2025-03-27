@@ -28,6 +28,7 @@ const (
 	RcvdMsgTypeConversationCreated                              RcvdMsgType = "conversation.created"
 	RcvdMsgTypeConversationItemCreated                          RcvdMsgType = "conversation.item.created"
 	RcvdMsgTypeConversationItemInputAudioTranscriptionCompleted RcvdMsgType = "conversation.item.input_audio_transcription.completed"
+	RcvdMsgTypeConversationItemInputAudioTranscriptionDelta     RcvdMsgType = "conversation.item.input_audio_transcription.delta"
 	RcvdMsgTypeConversationItemInputAudioTranscriptionFailed    RcvdMsgType = "conversation.item.input_audio_transcription.failed"
 	RcvdMsgTypeConversationItemTruncated                        RcvdMsgType = "conversation.item.truncated"
 	RcvdMsgTypeConversationItemDeleted                          RcvdMsgType = "conversation.item.deleted"

@@ -16,6 +16,20 @@ var MessageTypeRegistry = map[RcvdMsgType]func() RcvdMsg{
 		return &SessionUpdatedMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeSessionUpdated}}
 	},
 
+	// Transcription session-related messages
+	RcvdMsgTypeTranscriptionSessionCreated: func() RcvdMsg {
+		return &TranscriptionSessionCreatedMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeTranscriptionSessionCreated}}
+	},
+	RcvdMsgTypeTranscriptionSessionUpdated: func() RcvdMsg {
+		return &TranscriptionSessionUpdatedMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeTranscriptionSessionUpdated}}
+	},
+	RcvdMsgTypeInputAudioTranscription: func() RcvdMsg {
+		return &InputAudioTranscriptionMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeInputAudioTranscription}}
+	},
+	RcvdMsgTypeTranscriptionDone: func() RcvdMsg {
+		return &TranscriptionDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeTranscriptionDone}}
+	},
+
 	// Conversation-related messages
 	RcvdMsgTypeConversationCreated: func() RcvdMsg {
 		return &ConversationCreatedMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeConversationCreated}}

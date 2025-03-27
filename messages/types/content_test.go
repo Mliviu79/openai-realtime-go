@@ -3,6 +3,8 @@ package types
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/Mliviu79/openai-realtime-go/session"
 )
 
 func TestMessageContentTypes(t *testing.T) {
@@ -149,8 +151,8 @@ func TestMessageContentPartSerialization(t *testing.T) {
 
 func TestInputAudioTranscription(t *testing.T) {
 	// Test with all fields set
-	transcription := InputAudioTranscription{
-		Model:    TranscriptionModelWhisper1,
+	transcription := session.InputAudioTranscription{
+		Model:    session.TranscriptionModelWhisper1,
 		Language: "fr",
 		Prompt:   "Testing prompt",
 	}
@@ -166,8 +168,8 @@ func TestInputAudioTranscription(t *testing.T) {
 	}
 
 	// Check each field
-	if jsonMap["model"] != string(TranscriptionModelWhisper1) {
-		t.Errorf("Expected model to be %q, got %v", TranscriptionModelWhisper1, jsonMap["model"])
+	if jsonMap["model"] != string(session.TranscriptionModelWhisper1) {
+		t.Errorf("Expected model to be %q, got %v", session.TranscriptionModelWhisper1, jsonMap["model"])
 	}
 
 	if jsonMap["language"] != "fr" {

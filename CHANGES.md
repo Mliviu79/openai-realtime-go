@@ -2,10 +2,29 @@
 
 This document outlines the major changes and improvements made in this fork of the [WqyJh/go-openai-realtime](https://github.com/WqyJh/go-openai-realtime) library.
 
-## Latest Updates (March 2024)
+## Latest Updates (April 2025)
 
-- **Updated Dependencies**: Modified `go.mod` and `go.sum` to update dependencies.
-- **Gitignore Improvements**: Added additional patterns to `.gitignore`.
+### v0.1.3
+
+- **Fixed SendText Method**: Updated the `SendText` method in the messaging client to use `factory.InputTextContent` instead of `factory.TextContent` to properly match OpenAI's API expectations
+- **Test Updates**: Updated the test suite to reflect the new content type used in the `SendText` method
+- **Improved Examples**:
+  - Added new `dual_session` example demonstrating how to run both transcription and conversation sessions simultaneously
+  - Added new `simulated_transcription` example showing how to process simulated transcriptions
+  - Updated examples to use the two-step process (send message + request response) required by the API
+  - Enhanced documentation in all examples
+- **Bug Fixes**: Addressed issues with failing tests and linter errors
+- **Documentation**: Added detailed READMEs to all examples explaining their purpose and usage
+
+- **OpenAI Realtime API Update**: Added support for the latest OpenAI Realtime API features:
+  - Added dedicated support for transcription sessions via the new `/realtime/transcription_sessions` endpoint
+  - Added ability to update transcription sessions via the `transcription_session.update` event
+  - Added ability to request log probabilities in transcription results
+  - Added new transcription models: `gpt-4o-transcribe` and `gpt-4o-mini-transcribe`
+  - Added new voice options: `fable`, `onyx`, and `nova`
+  - Added semantic VAD support with eagerness levels for more natural turn detection
+  - Added input audio noise reduction for near-field and far-field microphones
+
 - **Message Handling Fixes**: Fixed issues in `messages/types/response.go` and `messages/incoming/session_test.go`.
 - **Session Management Enhancements**: Improved session type definitions in `session/session_types.go`.
 - **Tool Functionality Updates**: Enhanced tool functionality in `session/tools.go`.

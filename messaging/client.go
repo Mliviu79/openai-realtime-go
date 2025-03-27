@@ -169,7 +169,7 @@ func (c *Client) SendSessionUpdate(ctx context.Context, sessionReq session.Sessi
 
 // SendAudioBufferAppend sends an audio buffer append message.
 func (c *Client) SendAudioBufferAppend(ctx context.Context, audioData string) error {
-	msg := outgoing.NewAudioBufferAppendMessage(audioData, nil)
+	msg := outgoing.NewAudioBufferAppendMessage(audioData)
 	return c.SendMessage(ctx, msg)
 }
 
@@ -213,7 +213,7 @@ func (c *Client) SendResponseCancel(ctx context.Context, responseID string) erro
 // SendText sends a text message from the user.
 func (c *Client) SendText(ctx context.Context, text string) error {
 	content := []types.MessageContentPart{
-		factory.TextContent(text),
+		factory.InputTextContent(text),
 	}
 	item := factory.MessageItem(types.MessageRoleUser, content)
 	return c.SendConversationItemCreate(ctx, &item, nil)
@@ -248,5 +248,19 @@ func (c *Client) SendConversationItemTruncate(ctx context.Context, itemID string
 // This deletes the conversation item with the specified ID.
 func (c *Client) SendConversationItemDelete(ctx context.Context, itemID string) error {
 	msg := outgoing.NewConversationDeleteMessage(itemID)
+	return c.SendMessage(ctx, msg)
+}
+
+// SendTranscriptionSessionUpdate sends a transcription session update message.
+// This updates the configuration of the current transcription session.
+func (c *Client) SendTranscriptionSessionUpdate(ctx context.Context, sessionReq session.TranscriptionSessionRequest) error {
+	msg := outgoing.NewTranscriptionSessionUpdateMessage(sessionReq)
+	return c.SendMessage(ctx, msg)
+}
+
+// SendTranscriptionSessionUpdateWithID sends a transcription session update message with a custom event ID.
+// This updates the configuration of the current transcription session and allows tracking the update request.
+func (c *Client) SendTranscriptionSessionUpdateWithID(ctx context.Context, id string, sessionReq session.TranscriptionSessionRequest) error {
+	msg := outgoing.NewTranscriptionSessionUpdateMessageWithID(id, sessionReq)
 	return c.SendMessage(ctx, msg)
 }

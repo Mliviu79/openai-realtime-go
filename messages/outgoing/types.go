@@ -8,7 +8,8 @@ type OutMsgType string
 
 // Session-related message types
 const (
-	OutMsgTypeSessionUpdate OutMsgType = "session.update"
+	OutMsgTypeSessionUpdate              OutMsgType = "session.update"
+	OutMsgTypeTranscriptionSessionUpdate OutMsgType = "transcription_session.update"
 )
 
 // Audio buffer-related message types

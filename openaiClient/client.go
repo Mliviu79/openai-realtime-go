@@ -170,6 +170,46 @@ func WithReadLimit(readLimit int64) ConnectOption {
 	}
 }
 
+// TranscriptionConnectOption is a function that configures transcription connection options
+type TranscriptionConnectOption func(*transcriptionConnectOptions)
+
+// transcriptionConnectOptions holds the options for establishing a transcription connection
+type transcriptionConnectOptions struct {
+	logger    logger.Logger // Logger for the connection
+	sessionID string        // Session ID for the connection
+	readLimit int64         // Maximum size of a WebSocket message in bytes
+}
+
+// WithTranscriptionLogger sets the logger for the transcription connection
+//
+// Parameters:
+//   - logger: The logger to use for the connection
+func WithTranscriptionLogger(logger logger.Logger) TranscriptionConnectOption {
+	return func(o *transcriptionConnectOptions) {
+		o.logger = logger
+	}
+}
+
+// WithTranscriptionSessionID sets the session ID for the transcription connection
+//
+// Parameters:
+//   - sessionID: The session ID to use for the connection
+func WithTranscriptionSessionID(sessionID string) TranscriptionConnectOption {
+	return func(o *transcriptionConnectOptions) {
+		o.sessionID = sessionID
+	}
+}
+
+// WithTranscriptionReadLimit sets the maximum size of a WebSocket message in bytes
+//
+// Parameters:
+//   - readLimit: The maximum size in bytes (0 or negative means no limit)
+func WithTranscriptionReadLimit(readLimit int64) TranscriptionConnectOption {
+	return func(o *transcriptionConnectOptions) {
+		o.readLimit = readLimit
+	}
+}
+
 // Client is OpenAI Realtime API client
 type Client struct {
 	config httpClient.ClientConfig
@@ -219,7 +259,26 @@ func (c *Client) CreateSession(ctx context.Context, req *session.CreateRequest) 
 	)
 }
 
-// Connect establishes a WebSocket connection to the OpenAI Realtime API
+// CreateTranscriptionSession creates a new transcription session
+//
+// Parameters:
+//   - ctx: The context for the request
+//   - req: The transcription session creation request
+//
+// Returns:
+//   - *session.CreateTranscriptionSessionResponse: The transcription session creation response
+//   - error: An error if the request failed
+func (c *Client) CreateTranscriptionSession(ctx context.Context, req *session.CreateTranscriptionSessionRequest) (*session.CreateTranscriptionSessionResponse, error) {
+	return httpClient.Do[session.CreateTranscriptionSessionRequest, session.CreateTranscriptionSessionResponse](
+		ctx,
+		c.config.APIBaseURL+"/realtime/transcription_sessions",
+		req,
+		httpClient.WithHeaders(httpClient.GetHeaders(c.config)),
+		httpClient.WithClient(c.config.HTTPClient),
+	)
+}
+
+// Connect establishes a WebSocket connection to the OpenAI Realtime API for model-based conversations
 //
 // Parameters:
 //   - ctx: The context for the connection
@@ -249,13 +308,62 @@ func (c *Client) Connect(ctx context.Context, opts ...ConnectOption) (*ws.Conn, 
 	if options.sessionID != "" {
 		query.Set("session_id", options.sessionID)
 	}
-	url := c.config.BaseURL + "?" + query.Encode()
+
+	// Set the base URL
+	baseURL := c.config.BaseURL
+	url := baseURL + "?" + query.Encode()
 
 	headers := httpClient.GetHeaders(c.config)
 
 	wsConn, err := dialer.Dial(ctx, url, headers)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to OpenAI: %w", err)
+	}
+
+	conn := ws.NewConn(wsConn)
+	if options.logger != nil {
+		conn.SetLogger(options.logger)
+	}
+
+	return conn, nil
+}
+
+// ConnectTranscription establishes a WebSocket connection to the OpenAI Realtime API for transcription
+//
+// Parameters:
+//   - ctx: The context for the connection
+//   - opts: Options for the connection
+//
+// Returns:
+//   - *ws.Conn: The WebSocket connection
+//   - error: An error if the connection failed
+func (c *Client) ConnectTranscription(ctx context.Context, opts ...TranscriptionConnectOption) (*ws.Conn, error) {
+	options := &transcriptionConnectOptions{}
+	for _, opt := range opts {
+		opt(options)
+	}
+
+	// Create dialer with custom read limit if specified
+	dialer := ws.DirectDialer(ws.DialerOptions{
+		ReadLimit: options.readLimit,
+	})
+
+	// Construct URL with query parameters
+	query := url.Values{}
+	query.Set("intent", "transcription")
+	if options.sessionID != "" {
+		query.Set("session_id", options.sessionID)
+	}
+
+	// Set the base URL
+	baseURL := c.config.BaseURL
+	url := baseURL + "?" + query.Encode()
+
+	headers := httpClient.GetHeaders(c.config)
+
+	wsConn, err := dialer.Dial(ctx, url, headers)
+	if err != nil {
+		return nil, fmt.Errorf("failed to connect to OpenAI transcription service: %w", err)
 	}
 
 	conn := ws.NewConn(wsConn)

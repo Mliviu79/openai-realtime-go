@@ -66,6 +66,9 @@ type SessionRequest struct {
 	// TurnDetection configures how turns are detected in conversation
 	TurnDetection *TurnDetection `json:"turn_detection,omitempty"`
 
+	// InputAudioNoiseReduction configures noise reduction on input audio
+	InputAudioNoiseReduction *InputAudioNoiseReduction `json:"input_audio_noise_reduction,omitempty"`
+
 	// Tools specifies the available functions the model can call
 	Tools *[]Tool `json:"tools,omitempty"`
 

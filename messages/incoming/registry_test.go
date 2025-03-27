@@ -44,6 +44,12 @@ func TestMessageTypeRegistry(t *testing.T) {
 		RcvdMsgTypeSessionCreated,
 		RcvdMsgTypeSessionUpdated,
 
+		// Transcription session-related message types
+		RcvdMsgTypeTranscriptionSessionCreated,
+		RcvdMsgTypeTranscriptionSessionUpdated,
+		RcvdMsgTypeInputAudioTranscription,
+		RcvdMsgTypeTranscriptionDone,
+
 		// Conversation-related message types
 		RcvdMsgTypeConversationCreated,
 		RcvdMsgTypeConversationItemCreated,

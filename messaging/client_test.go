@@ -167,7 +167,7 @@ func TestSendText(t *testing.T) {
 			// Verify the message is a conversation item create message
 			dataStr := string(data)
 			if strings.Contains(dataStr, `"type":"conversation.item.create"`) &&
-				strings.Contains(dataStr, `"content":[{"type":"text","text":"test message"}]`) &&
+				strings.Contains(dataStr, `"content":[{"type":"input_text","text":"test message"}]`) &&
 				strings.Contains(dataStr, `"role":"user"`) {
 				textMessageSent = true
 			}

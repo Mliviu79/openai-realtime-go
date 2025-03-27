@@ -3,8 +3,6 @@ package outgoing
 import (
 	"encoding/json"
 	"testing"
-
-	"github.com/Mliviu79/openai-realtime-go/messages/types"
 )
 
 func TestAudioBufferAppendMessageStructure(t *testing.T) {
@@ -53,7 +51,7 @@ func TestAudioBufferAppendMessageStructure(t *testing.T) {
 	}
 
 	// Create another message with a mock transcription field (which is not part of OpenAI API)
-	messageWithTranscription := NewAudioBufferAppendMessage(audioData, nil)
+	messageWithTranscription := NewAudioBufferAppendMessage(audioData)
 	messageWithTranscription.ID = "event_789"
 
 	jsonDataWithTranscription, err := json.Marshal(messageWithTranscription)
@@ -201,12 +199,8 @@ func TestAudioBufferClearMessageStructure(t *testing.T) {
 func TestNewAudioBufferAppendMessage(t *testing.T) {
 	// Test with audio only
 	audio := "base64-encoded-audio-data"
-	// Transcription parameter is kept for backward compatibility but is no longer used
-	transcription := &types.InputAudioTranscription{
-		Language: "en",
-	}
 
-	message := NewAudioBufferAppendMessage(audio, transcription)
+	message := NewAudioBufferAppendMessage(audio)
 
 	// Verify the message type
 	if message.Type != OutMsgTypeAudioBufferAppend {
@@ -219,7 +213,7 @@ func TestNewAudioBufferAppendMessage(t *testing.T) {
 	}
 
 	// Test without transcription (should work the same)
-	message = NewAudioBufferAppendMessage(audio, nil)
+	message = NewAudioBufferAppendMessage(audio)
 
 	// Verify the message type
 	if message.Type != OutMsgTypeAudioBufferAppend {
@@ -264,12 +258,7 @@ func TestAudioMessageSerialization(t *testing.T) {
 	// Test serializing AudioBufferAppendMessage to JSON
 	audio := "base64-encoded-audio-data"
 
-	// Transcription parameter is kept for backward compatibility but is no longer used
-	transcription := &types.InputAudioTranscription{
-		Language: "en",
-	}
-
-	appendMessage := NewAudioBufferAppendMessage(audio, transcription)
+	appendMessage := NewAudioBufferAppendMessage(audio)
 	appendMessage.ID = "append-event-123"
 
 	jsonData, err := json.Marshal(appendMessage)
@@ -295,7 +284,7 @@ func TestAudioMessageSerialization(t *testing.T) {
 		t.Errorf("Expected audio field to be %q, got %q", audio, jsonMap["audio"])
 	}
 
-	// Verify transcription field is not included
+	// Transcription is not included in the JSON since we don't set it in the struct
 	if _, hasTranscription := jsonMap["transcription"]; hasTranscription {
 		t.Errorf("Transcription field should not be included in the JSON")
 	}
@@ -303,12 +292,12 @@ func TestAudioMessageSerialization(t *testing.T) {
 
 func TestOutMsgInterface(t *testing.T) {
 	// Verify that all message types implement the OutMsg interface
-	var _ OutMsg = NewAudioBufferAppendMessage("", nil)
+	var _ OutMsg = NewAudioBufferAppendMessage("")
 	var _ OutMsg = NewAudioBufferCommitMessage("")
 	var _ OutMsg = NewAudioBufferClearMessage()
 
 	// Test the interface methods
-	message := NewAudioBufferAppendMessage("test", nil)
+	message := NewAudioBufferAppendMessage("test")
 	message.ID = "test-id"
 
 	if message.OutMsgType() != string(OutMsgTypeAudioBufferAppend) {

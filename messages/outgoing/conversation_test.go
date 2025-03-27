@@ -205,8 +205,8 @@ func TestConversationCreateMessageStructure(t *testing.T) {
 		t.Fatalf("Expected function output item to be an object")
 	}
 
-	if functionOutputItemResult["type"] != "function_response" {
-		t.Errorf("Expected function output item type to be 'function_response', got %v", functionOutputItemResult["type"])
+	if functionOutputItemResult["type"] != "function_call_output" {
+		t.Errorf("Expected function output item type to be 'function_call_output', got %v", functionOutputItemResult["type"])
 	}
 
 	if functionOutputItemResult["call_id"] != "call_001" {

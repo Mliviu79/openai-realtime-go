@@ -49,6 +49,12 @@ const (
 	GPT4oMiniRealtimePreview20241217 Model = "gpt-4o-mini-realtime-preview-2024-12-17"
 )
 
+type Intent string
+
+const (
+	transcribe Intent = "transcribe"
+)
+
 // Voice represents the available voice options
 type Voice string
 
@@ -67,6 +73,15 @@ const (
 
 	// VoiceEcho is a baritone voice with an American accent
 	VoiceEcho Voice = "echo"
+
+	// VoiceFable is a narration-focused voice with an American accent
+	VoiceFable Voice = "fable"
+
+	// VoiceNova is a gender-neutral voice with an American accent
+	VoiceNova Voice = "nova"
+
+	// VoiceOnyx is a deep, authoritative voice with an American accent
+	VoiceOnyx Voice = "onyx"
 
 	// VoiceSage is a gentle, thoughtful voice with an American accent
 	VoiceSage Voice = "sage"

@@ -59,6 +59,7 @@ import (
 	"time"
 
 	"github.com/Mliviu79/openai-realtime-go/messages/incoming"
+	"github.com/Mliviu79/openai-realtime-go/messages/types"
 	"github.com/Mliviu79/openai-realtime-go/messaging"
 	"github.com/Mliviu79/openai-realtime-go/openaiClient"
 	"github.com/Mliviu79/openai-realtime-go/session"
@@ -89,9 +90,19 @@ func main() {
 	msgClient := messaging.NewClient(conn)
 
 	// Send a text message
-	err = msgClient.SendTextMessage(ctx, "Tell me about the OpenAI Realtime API", nil)
+	err = msgClient.SendText(ctx, "Tell me about the OpenAI Realtime API")
 	if err != nil {
 		log.Fatalf("Failed to send message: %v", err)
+	}
+	
+	// Request the model to generate a response
+	// This step is required - without it, no response will be generated
+	responseConfig := &types.ResponseConfig{
+		Modalities: []session.Modality{session.ModalityText},
+	}
+	err = msgClient.SendResponseCreate(ctx, responseConfig)
+	if err != nil {
+		log.Fatalf("Failed to request response: %v", err)
 	}
 
 	// Read and process messages
@@ -106,7 +117,7 @@ func main() {
 		switch m := msg.(type) {
 		case *incoming.ResponseTextDeltaMessage:
 			// Print text deltas as they arrive
-			fmt.Print(m.Delta.Text)
+			fmt.Print(m.Delta)
 		case *incoming.ResponseDoneMessage:
 			// End of the response
 			fmt.Println("\nResponse complete")
@@ -115,6 +126,27 @@ func main() {
 	}
 }
 ```
+
+## Important: Two-Step Process for Getting Responses
+
+The OpenAI Realtime API uses a two-step process to get a response from the model:
+
+1. **Send your message(s)** using methods like `SendText`, `SendAudio`, etc.
+2. **Request a response** using `SendResponseCreate` with a configuration object
+
+This design enables powerful capabilities:
+- You can send multiple messages before requesting a response
+- You can configure exactly how the model should respond (modalities, temperature, etc.)
+- You can control precisely when the model should start generating a response
+
+**Without the second step, the model will not generate any response to your messages.**
+
+The `SendResponseCreate` method takes a `ResponseConfig` object that can include:
+- Which modalities to use for the response (text, audio)
+- Voice options for audio responses
+- Temperature and other generation parameters
+- Tools the model can use
+- Optional system instructions
 
 ## Session Management
 
@@ -236,6 +268,74 @@ createReq := &session.CreateRequest{
     },
 }
 ```
+
+### Transcription Sessions
+
+The library supports OpenAI's dedicated transcription sessions for real-time speech-to-text:
+
+```go
+// Configure transcription session
+inputFormat := session.AudioFormatPCM16
+transcriptionModel := session.TranscriptionModelGPT4oTranscribe
+
+// Optional: request log probabilities 
+includes := []session.TranscriptionSessionInclude{
+    session.TranscriptionSessionIncludeLogprobs,
+}
+includeSlice := make([]session.TranscriptionSessionInclude, len(includes))
+copy(includeSlice, includes)
+
+// Create a transcription session
+createReq := &session.CreateTranscriptionSessionRequest{
+    TranscriptionSessionRequest: session.TranscriptionSessionRequest{
+        InputAudioFormat: &inputFormat,
+        InputAudioTranscription: &session.InputAudioTranscription{
+            Model: transcriptionModel,
+            Language: "en",  // Optional language hint
+            Prompt: "Technical vocabulary",  // Optional domain hint
+        },
+        Include: &includeSlice,  // Optional: include log probabilities
+    },
+}
+
+// Create the session via the API
+sessionResp, err := client.CreateTranscriptionSession(ctx, createReq)
+if err != nil {
+    log.Fatalf("Failed to create transcription session: %v", err)
+}
+
+// Connect to the transcription session
+conn, err := client.Connect(ctx,
+    openaiClient.WithModel(session.GPT4oRealtimePreview),
+    openaiClient.WithSessionID(sessionResp.ID),
+    openaiClient.WithTranscriptionSession())  // Special flag for transcription sessions
+
+// Update the transcription session with new settings while connected
+noiseReduction := &session.InputAudioNoiseReduction{
+    Type: session.NoiseReductionTypeNearField,
+}
+
+turnDetection := &session.TurnDetection{
+    Type:      session.TurnDetectionTypeSemanticVad,
+    Eagerness: session.EagernessLevelHigh,
+}
+
+updateReq := session.TranscriptionSessionRequest{
+    InputAudioNoiseReduction: noiseReduction,
+    TurnDetection:            turnDetection,
+}
+
+// Send the update
+err = msgClient.SendTranscriptionSessionUpdate(ctx, updateReq)
+if err != nil {
+    log.Fatalf("Failed to update transcription session: %v", err)
+}
+
+// Now send audio and receive transcriptions
+// ...
+```
+
+See the [transcription example](examples/transcription_example/main.go) for a complete demonstration.
 
 ## Comprehensive Example
 

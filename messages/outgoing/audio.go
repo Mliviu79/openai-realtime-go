@@ -1,9 +1,5 @@
 package outgoing
 
-import (
-	"github.com/Mliviu79/openai-realtime-go/messages/types"
-)
-
 // AudioBufferAppendMessage is used to append audio data to the buffer
 type AudioBufferAppendMessage struct {
 	OutMsgBase
@@ -12,7 +8,7 @@ type AudioBufferAppendMessage struct {
 }
 
 // NewAudioBufferAppendMessage creates a new audio buffer append message
-func NewAudioBufferAppendMessage(audio string, transcription *types.InputAudioTranscription) AudioBufferAppendMessage {
+func NewAudioBufferAppendMessage(audio string) AudioBufferAppendMessage {
 	return AudioBufferAppendMessage{
 		OutMsgBase: OutMsgBase{
 			Type: OutMsgTypeAudioBufferAppend,

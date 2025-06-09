@@ -148,6 +148,6 @@ func (c *GorillaWebSocketConn) Ping(ctx context.Context) error {
 	}()
 	defer close(done)
 
-	deadline := time.Now().Add(10 * time.Second)
+	deadline := time.Now().Add(59 * time.Second)
 	return c.conn.WriteControl(websocket.PingMessage, []byte{}, deadline)
 }

@@ -110,3 +110,10 @@ func WithMaxResponseOutputTokens(tokens int) ConfigOption {
 		}
 	}
 }
+
+// WithInputAudioNoiseReduction sets the input audio noise reduction for the session
+func WithInputAudioNoiseReduction(noiseReduction InputAudioNoiseReduction) ConfigOption {
+	return func(c *SessionRequest) {
+		c.InputAudioNoiseReduction = &noiseReduction
+	}
+}

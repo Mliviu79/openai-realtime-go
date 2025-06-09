@@ -29,6 +29,17 @@ type ConversationItemTranscriptionCompletedMessage struct {
 	ContentIndex int `json:"content_index"`
 	// Transcript contains the text transcribed from audio
 	Transcript string `json:"transcript"`
+	// Logprobs contains the log probabilities of the transcription
+	Logprobs []logprob `json:"logprobs,omitempty"`
+}
+
+type logprob struct {
+	//The bytes that were used to generate the log probability.
+	Bytes []byte `json:"bytes"`
+	//The log probability of the token.
+	Logprob float64 `json:"logprob"`
+	//The token that was used to generate the log probability.
+	Token string `json:"token"`
 }
 
 // ConversationItemTranscriptionFailedMessage is sent when audio transcription fails

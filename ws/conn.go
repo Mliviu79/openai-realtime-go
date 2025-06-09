@@ -70,6 +70,9 @@ func (c *Conn) SetLogger(logger logger.Logger) {
 func (c *Conn) Close() error {
 	c.mu.RLock()
 	defer c.mu.RUnlock()
+	if c.conn == nil {
+		return nil
+	}
 	return c.conn.Close()
 }
 

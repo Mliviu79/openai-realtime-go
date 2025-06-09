@@ -112,9 +112,36 @@ Added support for additional models:
 - Not backwards compatible with the original API due to the extensive refactoring
 - Improved error handling and return types
 
+## Security
+
+### Vulnerability Management
+
+This library actively monitors and addresses security vulnerabilities. For detailed security information, see [SECURITY.md](SECURITY.md).
+
+#### Current Security Status (as of v0.1.4)
+- **Go Version Required:** 1.23.8+ (to address known vulnerabilities)
+- **Dependencies:** ✅ All clean (no known vulnerabilities)
+- **Security Scanning:** Automated vulnerability checking with `govulncheck`
+
+#### Quick Security Check
+```bash
+# Check for vulnerabilities
+govulncheck ./...
+
+# Update Go (Windows users)
+./update-go-windows.ps1
+```
+
+For complete security documentation and update instructions, see [SECURITY.md](SECURITY.md).
+
+### Reporting Security Issues
+
+**DO NOT** report security vulnerabilities through public GitHub issues. Instead, please follow the responsible disclosure process outlined in [SECURITY.md](SECURITY.md).
+
 ## Code Quality
 
 - Comprehensive testing
 - Improved error handling
 - Better logging with configurable levels
-- Adherence to Go best practices and idioms 
+- Adherence to Go best practices and idioms
+- Regular security vulnerability scanning 

@@ -152,8 +152,8 @@ func printResponse(ctx context.Context, msgClient *messaging.Client) {
 		case incoming.RcvdMsgTypeResponseCreated:
 			fmt.Println("AI is generating a response...")
 
-		case incoming.RcvdMsgTypeResponseTextDelta:
-			if delta, ok := msg.(*incoming.ResponseTextDeltaMessage); ok {
+		case incoming.RcvdMsgTypeResponseOutputTextDelta:
+			if delta, ok := msg.(*incoming.ResponseOutputTextDeltaMessage); ok {
 				messageBuffer += delta.Delta
 				fmt.Print(delta.Delta)
 			}
@@ -177,7 +177,7 @@ func printResponse(ctx context.Context, msgClient *messaging.Client) {
 		case incoming.RcvdMsgTypeResponseOutputItemDone:
 		case incoming.RcvdMsgTypeResponseContentPartAdded:
 		case incoming.RcvdMsgTypeResponseContentPartDone:
-		case incoming.RcvdMsgTypeResponseTextDone:
+		case incoming.RcvdMsgTypeResponseOutputTextDone:
 
 		default:
 			fmt.Printf("Unhandled message type: %s\n", msg.RcvdMsgType())

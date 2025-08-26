@@ -1331,7 +1331,7 @@ func TestResponseContentPartDoneMessage(t *testing.T) {
 	}
 }
 
-func TestResponseTextDeltaMessage(t *testing.T) {
+func TestResponseOutputTextDeltaMessage(t *testing.T) {
 	testCases := []struct {
 		name         string
 		jsonData     string
@@ -1348,7 +1348,7 @@ func TestResponseTextDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_def456",
 				"event_id": "event_4142",
-				"type": "response.text.delta",
+				"type": "response.output_text.delta",
 				"response_id": "resp_001",
 				"item_id": "msg_007",
 				"output_index": 0,
@@ -1368,7 +1368,7 @@ func TestResponseTextDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_def457",
 				"event_id": "event_4143",
-				"type": "response.text.delta",
+				"type": "response.output_text.delta",
 				"response_id": "resp_002",
 				"item_id": "msg_008",
 				"output_index": 1,
@@ -1388,7 +1388,7 @@ func TestResponseTextDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_def458",
 				"event_id": "event_4144",
-				"type": "response.text.delta",
+				"type": "response.output_text.delta",
 				"response_id": "resp_003",
 				"item_id": "msg_009",
 				"output_index": 2,
@@ -1410,18 +1410,18 @@ func TestResponseTextDeltaMessage(t *testing.T) {
 			// Unmarshal the message
 			msg, err := UnmarshalRcvdMsg([]byte(tc.jsonData))
 			if err != nil {
-				t.Fatalf("Failed to unmarshal response.text.delta message: %v", err)
+				t.Fatalf("Failed to unmarshal response.output_text.delta message: %v", err)
 			}
 
-			// Verify it's a response.text.delta message
-			if msg.RcvdMsgType() != RcvdMsgTypeResponseTextDelta {
-				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseTextDelta, msg.RcvdMsgType())
+			// Verify it's a response.output_text.delta message
+			if msg.RcvdMsgType() != RcvdMsgTypeResponseOutputTextDelta {
+				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseOutputTextDelta, msg.RcvdMsgType())
 			}
 
-			// Cast to ResponseTextDeltaMessage
-			textDeltaMsg, ok := msg.(*ResponseTextDeltaMessage)
+			// Cast to ResponseOutputTextDeltaMessage
+			textDeltaMsg, ok := msg.(*ResponseOutputTextDeltaMessage)
 			if !ok {
-				t.Fatalf("Failed to cast message to ResponseTextDeltaMessage")
+				t.Fatalf("Failed to cast message to ResponseOutputTextDeltaMessage")
 			}
 
 			// Verify the message fields
@@ -1456,7 +1456,7 @@ func TestResponseTextDeltaMessage(t *testing.T) {
 			// Test marshaling back to JSON
 			marshaled, err := json.Marshal(textDeltaMsg)
 			if err != nil {
-				t.Fatalf("Failed to marshal response.text.delta message: %v", err)
+				t.Fatalf("Failed to marshal response.output_text.delta message: %v", err)
 			}
 
 			// Unmarshal the marshaled data to verify it's valid
@@ -1466,8 +1466,8 @@ func TestResponseTextDeltaMessage(t *testing.T) {
 			}
 
 			// Verify the type field in the marshaled JSON
-			if unmarshaled["type"] != "response.text.delta" {
-				t.Errorf("Expected type to be %q, got %v", "response.text.delta", unmarshaled["type"])
+			if unmarshaled["type"] != "response.output_text.delta" {
+				t.Errorf("Expected type to be %q, got %v", "response.output_text.delta", unmarshaled["type"])
 			}
 
 			// Verify the required fields exist
@@ -1490,7 +1490,7 @@ func TestResponseTextDeltaMessage(t *testing.T) {
 	}
 }
 
-func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
+func TestResponseOutputAudioTranscriptDeltaMessage(t *testing.T) {
 	testCases := []struct {
 		name         string
 		jsonData     string
@@ -1507,7 +1507,7 @@ func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_abc123",
 				"event_id": "event_5152",
-				"type": "response.audio_transcript.delta",
+				"type": "response.output_audio_transcript.delta",
 				"response_id": "resp_001",
 				"item_id": "item_001",
 				"output_index": 0,
@@ -1527,7 +1527,7 @@ func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_abc124",
 				"event_id": "event_5153",
-				"type": "response.audio_transcript.delta",
+				"type": "response.output_audio_transcript.delta",
 				"response_id": "resp_002",
 				"item_id": "item_002",
 				"output_index": 1,
@@ -1547,7 +1547,7 @@ func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_abc125",
 				"event_id": "event_5154",
-				"type": "response.audio_transcript.delta",
+				"type": "response.output_audio_transcript.delta",
 				"response_id": "resp_003",
 				"item_id": "item_003",
 				"output_index": 2,
@@ -1569,18 +1569,18 @@ func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
 			// Unmarshal the message
 			msg, err := UnmarshalRcvdMsg([]byte(tc.jsonData))
 			if err != nil {
-				t.Fatalf("Failed to unmarshal response.audio_transcript.delta message: %v", err)
+				t.Fatalf("Failed to unmarshal response.output_audio_transcript.delta message: %v", err)
 			}
 
-			// Verify it's a response.audio_transcript.delta message
-			if msg.RcvdMsgType() != RcvdMsgTypeResponseAudioTranscriptDelta {
-				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseAudioTranscriptDelta, msg.RcvdMsgType())
+			// Verify it's a response.output_audio_transcript.delta message
+			if msg.RcvdMsgType() != RcvdMsgTypeResponseOutputAudioTranscriptDelta {
+				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseOutputAudioTranscriptDelta, msg.RcvdMsgType())
 			}
 
-			// Cast to ResponseAudioTranscriptDeltaMessage
-			transcriptDeltaMsg, ok := msg.(*ResponseAudioTranscriptDeltaMessage)
+			// Cast to ResponseOutputAudioTranscriptDeltaMessage
+			transcriptDeltaMsg, ok := msg.(*ResponseOutputAudioTranscriptDeltaMessage)
 			if !ok {
-				t.Fatalf("Failed to cast message to ResponseAudioTranscriptDeltaMessage")
+				t.Fatalf("Failed to cast message to ResponseOutputAudioTranscriptDeltaMessage")
 			}
 
 			// Verify the message fields
@@ -1615,7 +1615,7 @@ func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
 			// Test marshaling back to JSON
 			marshaled, err := json.Marshal(transcriptDeltaMsg)
 			if err != nil {
-				t.Fatalf("Failed to marshal response.audio_transcript.delta message: %v", err)
+				t.Fatalf("Failed to marshal response.output_audio_transcript.delta message: %v", err)
 			}
 
 			// Unmarshal the marshaled data to verify it's valid
@@ -1625,8 +1625,8 @@ func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
 			}
 
 			// Verify the type field in the marshaled JSON
-			if unmarshaled["type"] != "response.audio_transcript.delta" {
-				t.Errorf("Expected type to be %q, got %v", "response.audio_transcript.delta", unmarshaled["type"])
+			if unmarshaled["type"] != "response.output_audio_transcript.delta" {
+				t.Errorf("Expected type to be %q, got %v", "response.output_audio_transcript.delta", unmarshaled["type"])
 			}
 
 			// Verify the required fields exist
@@ -1649,7 +1649,7 @@ func TestResponseAudioTranscriptDeltaMessage(t *testing.T) {
 	}
 }
 
-func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
+func TestResponseOutputAudioTranscriptDoneMessage(t *testing.T) {
 	testCases := []struct {
 		name         string
 		jsonData     string
@@ -1666,7 +1666,7 @@ func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_abc126",
 				"event_id": "event_6162",
-				"type": "response.audio_transcript.done",
+				"type": "response.output_audio_transcript.done",
 				"response_id": "resp_001",
 				"item_id": "item_001",
 				"output_index": 0,
@@ -1686,7 +1686,7 @@ func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_abc127",
 				"event_id": "event_6163",
-				"type": "response.audio_transcript.done",
+				"type": "response.output_audio_transcript.done",
 				"response_id": "resp_002",
 				"item_id": "item_002",
 				"output_index": 1,
@@ -1706,7 +1706,7 @@ func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_abc128",
 				"event_id": "event_6164",
-				"type": "response.audio_transcript.done",
+				"type": "response.output_audio_transcript.done",
 				"response_id": "resp_003",
 				"item_id": "item_003",
 				"output_index": 2,
@@ -1728,18 +1728,18 @@ func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
 			// Unmarshal the message
 			msg, err := UnmarshalRcvdMsg([]byte(tc.jsonData))
 			if err != nil {
-				t.Fatalf("Failed to unmarshal response.audio_transcript.done message: %v", err)
+				t.Fatalf("Failed to unmarshal response.output_audio_transcript.done message: %v", err)
 			}
 
-			// Verify it's a response.audio_transcript.done message
-			if msg.RcvdMsgType() != RcvdMsgTypeResponseAudioTranscriptDone {
-				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseAudioTranscriptDone, msg.RcvdMsgType())
+			// Verify it's a response.output_audio_transcript.done message
+			if msg.RcvdMsgType() != RcvdMsgTypeResponseOutputAudioTranscriptDone {
+				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseOutputAudioTranscriptDone, msg.RcvdMsgType())
 			}
 
-			// Cast to ResponseAudioTranscriptDoneMessage
-			transcriptDoneMsg, ok := msg.(*ResponseAudioTranscriptDoneMessage)
+			// Cast to ResponseOutputAudioTranscriptDoneMessage
+			transcriptDoneMsg, ok := msg.(*ResponseOutputAudioTranscriptDoneMessage)
 			if !ok {
-				t.Fatalf("Failed to cast message to ResponseAudioTranscriptDoneMessage")
+				t.Fatalf("Failed to cast message to ResponseOutputAudioTranscriptDoneMessage")
 			}
 
 			// Verify the message fields
@@ -1774,7 +1774,7 @@ func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
 			// Test marshaling back to JSON
 			marshaled, err := json.Marshal(transcriptDoneMsg)
 			if err != nil {
-				t.Fatalf("Failed to marshal response.audio_transcript.done message: %v", err)
+				t.Fatalf("Failed to marshal response.output_audio_transcript.done message: %v", err)
 			}
 
 			// Unmarshal the marshaled data to verify it's valid
@@ -1784,8 +1784,8 @@ func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
 			}
 
 			// Verify the type field in the marshaled JSON
-			if unmarshaled["type"] != "response.audio_transcript.done" {
-				t.Errorf("Expected type to be %q, got %v", "response.audio_transcript.done", unmarshaled["type"])
+			if unmarshaled["type"] != "response.output_audio_transcript.done" {
+				t.Errorf("Expected type to be %q, got %v", "response.output_audio_transcript.done", unmarshaled["type"])
 			}
 
 			// Verify the required fields exist
@@ -1808,7 +1808,7 @@ func TestResponseAudioTranscriptDoneMessage(t *testing.T) {
 	}
 }
 
-func TestResponseAudioDeltaMessage(t *testing.T) {
+func TestResponseOutputAudioDeltaMessage(t *testing.T) {
 	testCases := []struct {
 		name         string
 		jsonData     string
@@ -1825,7 +1825,7 @@ func TestResponseAudioDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_ghi789",
 				"event_id": "event_4950",
-				"type": "response.audio.delta",
+				"type": "response.output_audio.delta",
 				"response_id": "resp_001",
 				"item_id": "msg_008",
 				"output_index": 0,
@@ -1845,7 +1845,7 @@ func TestResponseAudioDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_ghi790",
 				"event_id": "event_4951",
-				"type": "response.audio.delta",
+				"type": "response.output_audio.delta",
 				"response_id": "resp_002",
 				"item_id": "msg_009",
 				"output_index": 1,
@@ -1865,7 +1865,7 @@ func TestResponseAudioDeltaMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_ghi791",
 				"event_id": "event_4952",
-				"type": "response.audio.delta",
+				"type": "response.output_audio.delta",
 				"response_id": "resp_003",
 				"item_id": "msg_010",
 				"output_index": 2,
@@ -1887,18 +1887,18 @@ func TestResponseAudioDeltaMessage(t *testing.T) {
 			// Unmarshal the message
 			msg, err := UnmarshalRcvdMsg([]byte(tc.jsonData))
 			if err != nil {
-				t.Fatalf("Failed to unmarshal response.audio.delta message: %v", err)
+				t.Fatalf("Failed to unmarshal response.output_audio.delta message: %v", err)
 			}
 
-			// Verify it's a response.audio.delta message
-			if msg.RcvdMsgType() != RcvdMsgTypeResponseAudioDelta {
-				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseAudioDelta, msg.RcvdMsgType())
+			// Verify it's a response.output_audio.delta message
+			if msg.RcvdMsgType() != RcvdMsgTypeResponseOutputAudioDelta {
+				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseOutputAudioDelta, msg.RcvdMsgType())
 			}
 
-			// Cast to ResponseAudioDeltaMessage
-			audioDeltaMsg, ok := msg.(*ResponseAudioDeltaMessage)
+			// Cast to ResponseOutputAudioDeltaMessage
+			audioDeltaMsg, ok := msg.(*ResponseOutputAudioDeltaMessage)
 			if !ok {
-				t.Fatalf("Failed to cast message to ResponseAudioDeltaMessage")
+				t.Fatalf("Failed to cast message to ResponseOutputAudioDeltaMessage")
 			}
 
 			// Verify the message fields
@@ -1933,7 +1933,7 @@ func TestResponseAudioDeltaMessage(t *testing.T) {
 			// Test marshaling back to JSON
 			marshaled, err := json.Marshal(audioDeltaMsg)
 			if err != nil {
-				t.Fatalf("Failed to marshal response.audio.delta message: %v", err)
+				t.Fatalf("Failed to marshal response.output_audio.delta message: %v", err)
 			}
 
 			// Unmarshal the marshaled data to verify it's valid
@@ -1943,8 +1943,8 @@ func TestResponseAudioDeltaMessage(t *testing.T) {
 			}
 
 			// Verify the type field in the marshaled JSON
-			if unmarshaled["type"] != "response.audio.delta" {
-				t.Errorf("Expected type to be %q, got %v", "response.audio.delta", unmarshaled["type"])
+			if unmarshaled["type"] != "response.output_audio.delta" {
+				t.Errorf("Expected type to be %q, got %v", "response.output_audio.delta", unmarshaled["type"])
 			}
 
 			// Verify the required fields exist
@@ -1967,7 +1967,7 @@ func TestResponseAudioDeltaMessage(t *testing.T) {
 	}
 }
 
-func TestResponseAudioDoneMessage(t *testing.T) {
+func TestResponseOutputAudioDoneMessage(t *testing.T) {
 	testCases := []struct {
 		name         string
 		jsonData     string
@@ -1983,7 +1983,7 @@ func TestResponseAudioDoneMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_jkl123",
 				"event_id": "event_5051",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_001",
 				"item_id": "msg_008",
 				"output_index": 0,
@@ -2001,7 +2001,7 @@ func TestResponseAudioDoneMessage(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_jkl124",
 				"event_id": "event_5052",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_002",
 				"item_id": "msg_009",
 				"output_index": 1,
@@ -2021,18 +2021,18 @@ func TestResponseAudioDoneMessage(t *testing.T) {
 			// Unmarshal the message
 			msg, err := UnmarshalRcvdMsg([]byte(tc.jsonData))
 			if err != nil {
-				t.Fatalf("Failed to unmarshal response.audio.done message: %v", err)
+				t.Fatalf("Failed to unmarshal response.output_audio.done message: %v", err)
 			}
 
-			// Verify it's a response.audio.done message
-			if msg.RcvdMsgType() != RcvdMsgTypeResponseAudioDone {
-				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseAudioDone, msg.RcvdMsgType())
+			// Verify it's a response.output_audio.done message
+			if msg.RcvdMsgType() != RcvdMsgTypeResponseOutputAudioDone {
+				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseOutputAudioDone, msg.RcvdMsgType())
 			}
 
-			// Cast to ResponseAudioDoneMessage
-			audioDoneMsg, ok := msg.(*ResponseAudioDoneMessage)
+			// Cast to ResponseOutputAudioDoneMessage
+			audioDoneMsg, ok := msg.(*ResponseOutputAudioDoneMessage)
 			if !ok {
-				t.Fatalf("Failed to cast message to ResponseAudioDoneMessage")
+				t.Fatalf("Failed to cast message to ResponseOutputAudioDoneMessage")
 			}
 
 			// Verify the message fields
@@ -2063,7 +2063,7 @@ func TestResponseAudioDoneMessage(t *testing.T) {
 			// Test marshaling back to JSON
 			marshaled, err := json.Marshal(audioDoneMsg)
 			if err != nil {
-				t.Fatalf("Failed to marshal response.audio.done message: %v", err)
+				t.Fatalf("Failed to marshal response.output_audio.done message: %v", err)
 			}
 
 			// Unmarshal the marshaled data to verify it's valid
@@ -2073,8 +2073,8 @@ func TestResponseAudioDoneMessage(t *testing.T) {
 			}
 
 			// Verify the type field in the marshaled JSON
-			if unmarshaled["type"] != "response.audio.done" {
-				t.Errorf("Expected type to be %q, got %v", "response.audio.done", unmarshaled["type"])
+			if unmarshaled["type"] != "response.output_audio.done" {
+				t.Errorf("Expected type to be %q, got %v", "response.output_audio.done", unmarshaled["type"])
 			}
 
 			// Verify the required fields exist
@@ -2094,7 +2094,7 @@ func TestResponseAudioDoneMessage(t *testing.T) {
 	}
 }
 
-func TestResponseAudioDoneMessageSpecific(t *testing.T) {
+func TestResponseOutputAudioDoneMessageSpecific(t *testing.T) {
 	testCases := []struct {
 		name         string
 		jsonData     string
@@ -2110,7 +2110,7 @@ func TestResponseAudioDoneMessageSpecific(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_jkl123",
 				"event_id": "event_5152",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_001",
 				"item_id": "msg_008",
 				"output_index": 0,
@@ -2128,7 +2128,7 @@ func TestResponseAudioDoneMessageSpecific(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_jkl124",
 				"event_id": "event_5153",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_002",
 				"item_id": "msg_009",
 				"output_index": 1,
@@ -2146,7 +2146,7 @@ func TestResponseAudioDoneMessageSpecific(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_jkl125",
 				"event_id": "event_5154",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_003",
 				"item_id": "msg_010",
 				"output_index": 3,
@@ -2166,18 +2166,18 @@ func TestResponseAudioDoneMessageSpecific(t *testing.T) {
 			// Unmarshal the message
 			msg, err := UnmarshalRcvdMsg([]byte(tc.jsonData))
 			if err != nil {
-				t.Fatalf("Failed to unmarshal response.audio.done message: %v", err)
+				t.Fatalf("Failed to unmarshal response.output_audio.done message: %v", err)
 			}
 
-			// Verify it's a response.audio.done message
-			if msg.RcvdMsgType() != RcvdMsgTypeResponseAudioDone {
-				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseAudioDone, msg.RcvdMsgType())
+			// Verify it's a response.output_audio.done message
+			if msg.RcvdMsgType() != RcvdMsgTypeResponseOutputAudioDone {
+				t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseOutputAudioDone, msg.RcvdMsgType())
 			}
 
-			// Cast to ResponseAudioDoneMessage
-			audioDoneMsg, ok := msg.(*ResponseAudioDoneMessage)
+			// Cast to ResponseOutputAudioDoneMessage
+			audioDoneMsg, ok := msg.(*ResponseOutputAudioDoneMessage)
 			if !ok {
-				t.Fatalf("Failed to cast message to ResponseAudioDoneMessage")
+				t.Fatalf("Failed to cast message to ResponseOutputAudioDoneMessage")
 			}
 
 			// Verify the message fields
@@ -2208,7 +2208,7 @@ func TestResponseAudioDoneMessageSpecific(t *testing.T) {
 			// Test marshaling back to JSON
 			marshaled, err := json.Marshal(audioDoneMsg)
 			if err != nil {
-				t.Fatalf("Failed to marshal response.audio.done message: %v", err)
+				t.Fatalf("Failed to marshal response.output_audio.done message: %v", err)
 			}
 
 			// Unmarshal the marshaled data to verify it's valid
@@ -2218,8 +2218,8 @@ func TestResponseAudioDoneMessageSpecific(t *testing.T) {
 			}
 
 			// Verify the type field in the marshaled JSON
-			if unmarshaled["type"] != "response.audio.done" {
-				t.Errorf("Expected type to be %q, got %v", "response.audio.done", unmarshaled["type"])
+			if unmarshaled["type"] != "response.output_audio.done" {
+				t.Errorf("Expected type to be %q, got %v", "response.output_audio.done", unmarshaled["type"])
 			}
 
 			// Verify the required fields exist
@@ -2233,7 +2233,7 @@ func TestResponseAudioDoneMessageSpecific(t *testing.T) {
 	}
 }
 
-func TestResponseAudioDoneAdditionalCasesSpecific(t *testing.T) {
+func TestResponseOutputAudioDoneAdditionalCasesSpecific(t *testing.T) {
 	testCases := []struct {
 		name           string
 		jsonData       string
@@ -2245,7 +2245,7 @@ func TestResponseAudioDoneAdditionalCasesSpecific(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_err1",
 				"event_id": "event_5160",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_004",
 				"item_id": "msg_011"
 				
@@ -2258,7 +2258,7 @@ func TestResponseAudioDoneAdditionalCasesSpecific(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_err2",
 				"event_id": "event_5161",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_005",
 				"item_id": "msg_012",
 				"output_index": "invalid",
@@ -2272,7 +2272,7 @@ func TestResponseAudioDoneAdditionalCasesSpecific(t *testing.T) {
 			jsonData: `{
 				"message_id": "msg_err3",
 				"event_id": "event_5162",
-				"type": "response.audio.done",
+				"type": "response.output_audio.done",
 				"response_id": "resp_006",
 				"item_id": "msg_013",
 				"output_index": 0,
@@ -2294,9 +2294,9 @@ func TestResponseAudioDoneAdditionalCasesSpecific(t *testing.T) {
 					t.Fatalf("Expected successful unmarshal but got error: %v", err)
 				}
 
-				// Verify it's a response.audio.done message
-				if msg.RcvdMsgType() != RcvdMsgTypeResponseAudioDone {
-					t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseAudioDone, msg.RcvdMsgType())
+				// Verify it's a response.output_audio.done message
+				if msg.RcvdMsgType() != RcvdMsgTypeResponseOutputAudioDone {
+					t.Fatalf("Expected message type to be %q, got %q", RcvdMsgTypeResponseOutputAudioDone, msg.RcvdMsgType())
 				}
 
 				// No need to check fields if we're testing missing fields

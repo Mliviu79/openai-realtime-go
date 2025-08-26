@@ -95,8 +95,8 @@ func main() {
 		}
 
 		switch msg.RcvdMsgType() {
-		case incoming.RcvdMsgTypeResponseTextDelta:
-			if delta, ok := msg.(*incoming.ResponseTextDeltaMessage); ok {
+		case incoming.RcvdMsgTypeResponseOutputTextDelta:
+			if delta, ok := msg.(*incoming.ResponseOutputTextDeltaMessage); ok {
 				fmt.Print(delta.Delta)
 			}
 		case incoming.RcvdMsgTypeResponseDone:

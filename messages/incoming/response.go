@@ -48,8 +48,8 @@ type ResponseContentPartDoneMessage struct {
 	Part types.MessageContentPart `json:"part"`
 }
 
-// ResponseTextDeltaMessage is sent when new text is added to a response
-type ResponseTextDeltaMessage struct {
+// ResponseOutputTextDeltaMessage is sent when new text is added to a response
+type ResponseOutputTextDeltaMessage struct {
 	RcvdMsgBase
 	// ResponseID identifies which response this text belongs to
 	ResponseID string `json:"response_id"`
@@ -63,8 +63,8 @@ type ResponseTextDeltaMessage struct {
 	Delta string `json:"delta"`
 }
 
-// ResponseTextDoneMessage is sent when text generation is completed
-type ResponseTextDoneMessage struct {
+// ResponseOutputTextDoneMessage is sent when text generation is completed
+type ResponseOutputTextDoneMessage struct {
 	RcvdMsgBase
 	// ResponseID identifies which response this text belongs to
 	ResponseID string `json:"response_id"`
@@ -100,8 +100,8 @@ type ResponseOutputItemDoneMessage struct {
 	Item types.OutputItem `json:"item"`
 }
 
-// ResponseAudioTranscriptDeltaMessage is sent when new transcript text is added
-type ResponseAudioTranscriptDeltaMessage struct {
+// ResponseOutputAudioTranscriptDeltaMessage is sent when new transcript text is added
+type ResponseOutputAudioTranscriptDeltaMessage struct {
 	RcvdMsgBase
 	// ResponseID identifies which response this transcript belongs to
 	ResponseID string `json:"response_id"`
@@ -115,8 +115,8 @@ type ResponseAudioTranscriptDeltaMessage struct {
 	Delta string `json:"delta"`
 }
 
-// ResponseAudioTranscriptDoneMessage is sent when transcript generation is completed
-type ResponseAudioTranscriptDoneMessage struct {
+// ResponseOutputAudioTranscriptDoneMessage is sent when transcript generation is completed
+type ResponseOutputAudioTranscriptDoneMessage struct {
 	RcvdMsgBase
 	// ResponseID identifies which response this transcript belongs to
 	ResponseID string `json:"response_id"`
@@ -130,8 +130,8 @@ type ResponseAudioTranscriptDoneMessage struct {
 	Transcript string `json:"transcript"`
 }
 
-// ResponseAudioDeltaMessage is sent when new audio data is added
-type ResponseAudioDeltaMessage struct {
+// ResponseOutputAudioDeltaMessage is sent when new audio data is added
+type ResponseOutputAudioDeltaMessage struct {
 	RcvdMsgBase
 	// ResponseID identifies which response this audio belongs to
 	ResponseID string `json:"response_id"`
@@ -145,8 +145,8 @@ type ResponseAudioDeltaMessage struct {
 	Delta string `json:"delta"`
 }
 
-// ResponseAudioDoneMessage is sent when audio generation is completed
-type ResponseAudioDoneMessage struct {
+// ResponseOutputAudioDoneMessage is sent when audio generation is completed
+type ResponseOutputAudioDoneMessage struct {
 	RcvdMsgBase
 	// ResponseID identifies which response this audio belongs to
 	ResponseID string `json:"response_id"`

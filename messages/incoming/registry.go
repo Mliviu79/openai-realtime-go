@@ -78,11 +78,11 @@ var MessageTypeRegistry = map[RcvdMsgType]func() RcvdMsg{
 	RcvdMsgTypeResponseContentPartDone: func() RcvdMsg {
 		return &ResponseContentPartDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseContentPartDone}}
 	},
-	RcvdMsgTypeResponseTextDelta: func() RcvdMsg {
-		return &ResponseTextDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseTextDelta}}
+	RcvdMsgTypeResponseOutputTextDelta: func() RcvdMsg {
+		return &ResponseOutputTextDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputTextDelta}}
 	},
-	RcvdMsgTypeResponseTextDone: func() RcvdMsg {
-		return &ResponseTextDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseTextDone}}
+	RcvdMsgTypeResponseOutputTextDone: func() RcvdMsg {
+		return &ResponseOutputTextDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputTextDone}}
 	},
 	RcvdMsgTypeResponseOutputItemAdded: func() RcvdMsg {
 		return &ResponseOutputItemAddedMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputItemAdded}}
@@ -90,17 +90,17 @@ var MessageTypeRegistry = map[RcvdMsgType]func() RcvdMsg{
 	RcvdMsgTypeResponseOutputItemDone: func() RcvdMsg {
 		return &ResponseOutputItemDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputItemDone}}
 	},
-	RcvdMsgTypeResponseAudioTranscriptDelta: func() RcvdMsg {
-		return &ResponseAudioTranscriptDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseAudioTranscriptDelta}}
+	RcvdMsgTypeResponseOutputAudioTranscriptDelta: func() RcvdMsg {
+		return &ResponseOutputAudioTranscriptDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputAudioTranscriptDelta}}
 	},
-	RcvdMsgTypeResponseAudioTranscriptDone: func() RcvdMsg {
-		return &ResponseAudioTranscriptDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseAudioTranscriptDone}}
+	RcvdMsgTypeResponseOutputAudioTranscriptDone: func() RcvdMsg {
+		return &ResponseOutputAudioTranscriptDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputAudioTranscriptDone}}
 	},
-	RcvdMsgTypeResponseAudioDelta: func() RcvdMsg {
-		return &ResponseAudioDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseAudioDelta}}
+	RcvdMsgTypeResponseOutputAudioDelta: func() RcvdMsg {
+		return &ResponseOutputAudioDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputAudioDelta}}
 	},
-	RcvdMsgTypeResponseAudioDone: func() RcvdMsg {
-		return &ResponseAudioDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseAudioDone}}
+	RcvdMsgTypeResponseOutputAudioDone: func() RcvdMsg {
+		return &ResponseOutputAudioDoneMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseOutputAudioDone}}
 	},
 	RcvdMsgTypeResponseFunctionCallArgumentsDelta: func() RcvdMsg {
 		return &ResponseFunctionCallArgumentsDeltaMessage{RcvdMsgBase: RcvdMsgBase{Type: RcvdMsgTypeResponseFunctionCallArgumentsDelta}}

@@ -354,8 +354,8 @@ func runConversationSession(ctx context.Context, client *openaiClient.Client, lo
 				}
 
 				switch msg.RcvdMsgType() {
-				case incoming.RcvdMsgTypeResponseTextDelta:
-					if delta, ok := msg.(*incoming.ResponseTextDeltaMessage); ok {
+				case incoming.RcvdMsgTypeResponseOutputTextDelta:
+					if delta, ok := msg.(*incoming.ResponseOutputTextDeltaMessage); ok {
 						if !isCollectingResponse {
 							fmt.Print("[CONVERSATION] AI: ")
 							isCollectingResponse = true
@@ -385,7 +385,7 @@ func runConversationSession(ctx context.Context, client *openaiClient.Client, lo
 				case incoming.RcvdMsgTypeResponseOutputItemDone:
 				case incoming.RcvdMsgTypeResponseContentPartAdded:
 				case incoming.RcvdMsgTypeResponseContentPartDone:
-				case incoming.RcvdMsgTypeResponseTextDone:
+				case incoming.RcvdMsgTypeResponseOutputTextDone:
 					// These message types are expected and can be safely ignored
 				default:
 					fmt.Printf("[CONVERSATION] Unhandled message type: %s\n", msg.RcvdMsgType())

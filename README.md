@@ -4,6 +4,11 @@ This document outlines the major changes and improvements made in this fork of t
 
 ## Latest Updates (April 2025)
 
+### v0.1.4
+
+- **Header Update**: Removed deprecated `OpenAI-Beta` header; the Realtime API is now generally available
+- **Message Type Update**: Renamed response text and audio events to the new `response.output_*` variants
+
 ### v0.1.3
 
 - **Fixed SendText Method**: Updated the `SendText` method in the messaging client to use `factory.InputTextContent` instead of `factory.TextContent` to properly match OpenAI's API expectations

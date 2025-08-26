@@ -6,5 +6,7 @@ mods=(
 )
 
 for mod in "${mods[@]}"; do
-    (cd "$mod" && "$@")
+    if [ -d "$mod" ]; then
+        (cd "$mod" && "$@") || exit $?
+    fi
 done

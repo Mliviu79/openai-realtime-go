@@ -4,6 +4,11 @@ This document outlines the major changes and improvements made in this fork of t
 
 ## Latest Updates (April 2025)
 
+### v0.1.4
+
+- **Header Update**: Removed deprecated `OpenAI-Beta` header; the Realtime API is now generally available
+- **Message Type Update**: Renamed response text and audio events to the new `response.output_*` variants
+
 ### v0.1.3
 
 - **Fixed SendText Method**: Updated the `SendText` method in the messaging client to use `factory.InputTextContent` instead of `factory.TextContent` to properly match OpenAI's API expectations
@@ -15,7 +20,6 @@ This document outlines the major changes and improvements made in this fork of t
   - Enhanced documentation in all examples
 - **Bug Fixes**: Addressed issues with failing tests and linter errors
 - **Documentation**: Added detailed READMEs to all examples explaining their purpose and usage
-
 - **OpenAI Realtime API Update**: Added support for the latest OpenAI Realtime API features:
   - Added dedicated support for transcription sessions via the new `/realtime/transcription_sessions` endpoint
   - Added ability to update transcription sessions via the `transcription_session.update` event

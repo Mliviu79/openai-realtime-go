@@ -82,8 +82,8 @@
 //
 //		// Handle different message types
 //		switch m := msg.(type) {
-//		case *incoming.ResponseTextDeltaMessage:
-//			fmt.Print(m.Delta.Text)
+//		case *incoming.ResponseOutputTextDeltaMessage:
+//			fmt.Print(m.Delta)
 //		case *incoming.ResponseDoneMessage:
 //			fmt.Println("\nResponse complete")
 //		// Handle other message types...

@@ -92,14 +92,14 @@ func (t *TestTracker) GetUnseen() []string {
 		"response.done",
 
 		// Response delta events
-		"response.text.delta",
-		"response.audio.delta",
-		"response.audio_transcript.delta",
+		"response.output_text.delta",
+		"response.output_audio.delta",
+		"response.output_audio_transcript.delta",
 		"response.function_call_arguments.delta",
 
 		// Response completion events
-		"response.audio.done",
-		"response.audio_transcript.done",
+		"response.output_audio.done",
+		"response.output_audio_transcript.done",
 		"response.function_call_arguments.done",
 		"response.function_call_output.done", // Added: Function call output completion
 

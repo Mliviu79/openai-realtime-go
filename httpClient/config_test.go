@@ -57,6 +57,10 @@ func TestGetHeaders(t *testing.T) {
 	if headers.Get("Content-Type") != "application/json" {
 		t.Errorf("Expected Content-Type header to be 'application/json', got %q", headers.Get("Content-Type"))
 	}
+
+	if beta := headers.Get("OpenAI-Beta"); beta != "" {
+		t.Errorf("Expected no OpenAI-Beta header, got %q", beta)
+	}
 }
 
 func TestGetHeadersAzure(t *testing.T) {

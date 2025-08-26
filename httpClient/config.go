@@ -72,7 +72,6 @@ func GetHeaders(config ClientConfig) http.Header {
 		},
 		APITypeOpenAI: func(h http.Header, token string) {
 			h.Set("Authorization", "Bearer "+token)
-			h.Set("OpenAI-Beta", "realtime=v1")
 		},
 	}
 
